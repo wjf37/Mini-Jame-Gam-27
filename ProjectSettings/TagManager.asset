@@ -3,7 +3,12 @@
 --- !u!78 &1
 TagManager:
   serializedVersion: 2
-  tags: []
+  tags:
+  - Wall
+  - Interactable
+  - Cave
+  - Animal
+  - Human
   layers:
   - Default
   - TransparentFX
@@ -11,13 +16,13 @@ TagManager:
   - 
   - Water
   - UI
-  - 
-  - 
-  - 
-  - 
-  - 
-  - 
-  - 
+  - Player
+  - Animal
+  - Human
+  - Resource
+  - Cave
+  - Tiles
+  - Wall
   - 
   - 
   - 
@@ -40,4 +45,16 @@ TagManager:
   m_SortingLayers:
   - name: Default
     uniqueID: 0
+    locked: 0
+  - name: Tiles
+    uniqueID: 2803549291
+    locked: 0
+  - name: Background
+    uniqueID: 3010586609
+    locked: 0
+  - name: Foreground
+    uniqueID: 1574753837
+    locked: 0
+  - name: LIving
+    uniqueID: 50916937
     locked: 0
