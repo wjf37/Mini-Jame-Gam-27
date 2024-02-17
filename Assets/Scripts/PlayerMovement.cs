@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class PlayerMovement : MonoBehaviour
 {
+    public Animator animator;
     [SerializeField] float speed = 6;
     [SerializeField] GameObject interactionBox;
     [SerializeField] GameObject invisWallText;
@@ -19,11 +20,15 @@ public class PlayerMovement : MonoBehaviour
     void Update(){
         movement.x = Input.GetAxisRaw("Horizontal");
         movement.y = Input.GetAxisRaw("Vertical");
+        
+        animator.SetFloat("Horizontal", movement.x);
+        animator.SetFloat("Vertical", movement.y);
+        animator.SetFloat("Speed", movement.sqrMagnitude);
     }
     // Update is called once per frame
     void FixedUpdate()
     {
-        rb.MovePosition(rb.position + speed * Time.fixedDeltaTime * movement);
+        rb.MovePosition(rb.position + speed * Time.fixedDeltaTime * movement.normalized);
         //+x = z 90 -x = z -90 +y = z 180 -y = z 0
         if (movement != Vector2.zero)
         {

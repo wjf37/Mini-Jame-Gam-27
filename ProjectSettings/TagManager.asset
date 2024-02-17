@@ -9,6 +9,7 @@ TagManager:
   - Cave
   - Animal
   - Human
+  - Tree
   layers:
   - Default
   - TransparentFX
@@ -55,6 +56,6 @@ TagManager:
   - name: Foreground
     uniqueID: 1574753837
     locked: 0
-  - name: LIving
+  - name: Living
     uniqueID: 50916937
     locked: 0

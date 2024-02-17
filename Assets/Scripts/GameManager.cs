@@ -8,6 +8,7 @@ public class GameManager : MonoBehaviour
     public bool isGameActive;
     public bool gameOverFlag = false;
     [SerializeField] GameObject pauseScreen;
+    [SerializeField] List<GameObject> resourcePrefabs = new();
     private bool paused = false;
     private Vector2 spawnRangeTopL =  new(-33f,26f);
     private Vector2 spawnRangeBotR = new(42f,-20f);
