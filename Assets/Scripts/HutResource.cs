@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class TreeResource : Resource
+public class HutResource : Resource
 {
     private ResourceManager resourceManager;
     
@@ -16,7 +16,7 @@ public class TreeResource : Resource
     {
         Destroy(gameObject);
         resourceManager.AddResourcePopup(transform.position);
-        resourceManager.ModifyResource("wood", 1);
+        resourceManager.ModifyResource("ppl", 1);
 
     }
 }

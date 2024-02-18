@@ -10,15 +10,21 @@ public class GameManager : MonoBehaviour
     [SerializeField] GameObject pauseScreen;
     [SerializeField] GameObject[] resourcePrefabs;
     [SerializeField] int mapResourceNum = 30;
-    private float resourceSpace = 8f;
+    private float resourceSpace = 3f;
     private bool paused = false;
     private Vector2 spawnRangeTopL =  new(-33f,26f);
     private Vector2 spawnRangeBotR = new(42f,-20f);
+    private ResourceManager resourceManager;
+    private List<int> resourceList = new();
+    private int winConditions; //0=no resources, no people, no ink. 1=no resources, ppl, no ink. 2= resources, no people,  no ink 3 =  resources, people, no ink. 4 = resources, ppl, ink
     // Start is called before the first frame update
     void Start()
     {
         SpawnResources();
         isGameActive = true;
+        resourceManager = GameObject.Find("ResourceManager").GetComponent<ResourceManager>();
+        winConditions = 0;
+        Time.timeScale = 1f;
     }
 
     // Update is called once per frame
@@ -44,11 +50,28 @@ public class GameManager : MonoBehaviour
     public void GameOver(){
         isGameActive = false;
         Time.timeScale = 0;
-    }
 
-    public void B2Menu(){
-        SceneManager.LoadScene(0);
-        //add other vars 
+        resourceList = resourceManager.resourceList;
+        if (resourceList[0]>=3 && resourceList[1]>=3 && resourceList[2]>=3 && resourceList[3]>=3)
+        {
+            winConditions = 4;
+        }
+        else if (resourceList[0]>=3 && resourceList[1]>=3 && resourceList[2]>=3)
+        {
+            winConditions = 3;
+        }
+        else if (resourceList[0]>=3 && resourceList[1]>=3 && resourceList[2]<3)
+        {
+            winConditions = 2;
+        }
+        else if ((resourceList[0]<3 || resourceList[1]<3) && resourceList[2]>=3)
+        {
+            winConditions = 1;
+        }
+        
+
+        CarryOver.Instance.winCondition = winConditions;
+        SceneManager.LoadScene(3);
     }
 
     private void SpawnResources()
@@ -60,9 +83,10 @@ public class GameManager : MonoBehaviour
         for (int i = 0; i<mapResourceNum; i++)
         {
             Vector2 randomPos = PosGen();
-            if (CheckProx(randomPos))
+            if (!CheckProx(randomPos))
             {
-                Instantiate(resourcePrefabs[ChooseResource()]);
+                GameObject newResource = resourcePrefabs[ChooseResource()];
+                Instantiate(newResource, randomPos, newResource.transform.rotation);
             }
             else
             {
@@ -75,6 +99,7 @@ public class GameManager : MonoBehaviour
                 i = 100;
             }
         }
+        Debug.Log("Resources Spawned");
     }
 
     private Vector2 PosGen()
@@ -88,7 +113,7 @@ public class GameManager : MonoBehaviour
     {
         //tree,stone = same chance. hut = 10% chance 0 = tree, 1 = stone, 2 = hut
         int index = 0;
-        if (Random.Range(0f,1f)<10)
+        if (Random.Range(0f,1f)<0.2)
         {
             index = 2;
         }
@@ -126,7 +151,7 @@ public class GameManager : MonoBehaviour
     {
         float radians = deg / 57.29578f;
 
-        Vector2 dirVec = new Vector2((float)Mathf.Cos(radians), (float)Mathf.Sin(radians));
+        Vector2 dirVec = new((float)Mathf.Cos(radians), (float)Mathf.Sin(radians));
 
         return dirVec;
     }

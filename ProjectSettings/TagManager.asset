@@ -10,6 +10,8 @@ TagManager:
   - Animal
   - Human
   - Tree
+  - Fire
+  - Interact
   layers:
   - Default
   - TransparentFX
@@ -24,8 +26,8 @@ TagManager:
   - Cave
   - Tiles
   - Wall
-  - 
-  - 
+  - Interact
+  - FirePit
   - 
   - 
   - 

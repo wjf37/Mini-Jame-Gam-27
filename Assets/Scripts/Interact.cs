@@ -4,20 +4,25 @@ using UnityEngine;
 
 public class Interact : MonoBehaviour
 {
-    // Start is called before the first frame update
+    private Resource resource;
     void Start()
     {
-        
     }
 
-    // Update is called once per frame
     void Update()
     {
-        
+        if (Input.GetKeyDown(KeyCode.Space) && resource != null)
+        {
+            resource.CollectResource();
+        }
     }
-
     void OnTriggerEnter2D(Collider2D collider2D)
     {
-        collider2D.gameObject.GetComponent<Resource>().CollectResource();
+        resource = collider2D.gameObject.GetComponent<Resource>();
+    }
+
+    void OnTriggerExit2D()
+    {
+        resource = null;
     }
 }
